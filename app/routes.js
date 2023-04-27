@@ -10,14 +10,16 @@ module.exports = function(app, passport, db) {
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
         db.collection('messages').find().toArray((err, result) => {
-          
           if (err) return console.log(err)
           let lowQuantity = result.filter(item => item.quantity < 5)
+          let extraLow = lowQuantity.filter(item => item.quantity < 3 )
+          console.log(extraLow)
           res.render('profile.ejs', {
             user : req.user,
             messages: result,
             lowQuantity: lowQuantity
           })
+          
         })
     });
 
@@ -32,7 +34,7 @@ module.exports = function(app, passport, db) {
 // message board routes ===============================================================
 
     app.post('/messages', (req, res) => {
-      db.collection('messages').save({name: req.body.name, quantity: req.body.quantity, plusOne: 0}, (err, result) => {
+      db.collection('messages').save({name: req.body.name, quantity: req.body.quantity}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect('/profile')
@@ -43,11 +45,12 @@ module.exports = function(app, passport, db) {
       db.collection('messages')
       .findOneAndUpdate({name: req.body.name, quantity: req.body.quantity}, {
         $set: {
+          
           quantity: req.body.newQuantity 
         }
       }, {
         sort: {_id: -1},
-        upsert: true
+        upsert: false
       }, (err, result) => {
         if (err) return res.send(err)
         res.send(result)

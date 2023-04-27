@@ -49,14 +49,6 @@
           <% } %>
           </ul>
 
-          <ul class="lowQuantity">
-            <% for(var i=0; i<lowQuantity.length; i++) {%>
-              <li class="lowQuantity">
-                <span><%= lowQuantity[i].name %></span>
-                <span><%= lowQuantity[i].quantity %></span>
-              </li>
-            <% } %>
-            </ul>
 
           <h2>Add a message</h2>
         <% if (user.local.email) { %>
@@ -65,9 +57,19 @@
             <input type="number" placeholder="quantity" name="quantity">
             <button type="submit">Submit</button>
           </form>
-        </div>
+       
         <% } %>
-
+        
+        <h3>Low in stock:</h3>
+        <ul class='lowQuantity' >
+          <% for(var i=0; i<lowQuantity.length; i++) {%>
+            <li class="lowQuantity">
+              <span><%= lowQuantity[i].name %></span>
+              <span class='<%= lowQuantity[i].quantity < 3 ? "alert" : "" %>'><%= lowQuantity[i].quantity %></span>
+            </li>
+          <% } %>
+          </ul>
+        </div>
 </div>
 
 <script src="main.js"></script>
