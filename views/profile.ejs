@@ -20,7 +20,7 @@
         <div class="col-sm-6">
             <div class="well">
                 <h3><span class="fa fa-user"></span> User:</h3>
-
+                <p>Add inventory items to your list with the quantity in stock, you may update this quantity at any time. Items low in stock will be flagged for high priority.</p>
                 <% if (user.local.email) { %>
                     <p>
                         <strong>id</strong>: <%= user._id %><br>
@@ -36,6 +36,21 @@
             </div>
         </div>
         <div class="col-sm-6">
+          <h2>Add items:</h2>
+          <form action="/messages" method="POST">
+            <input type="text" placeholder="product name" name="name">
+            <input type="number" placeholder="quantity" name="quantity">
+            <button type="submit">Submit</button>
+          </form>
+          <h3>Low in stock:</h3>
+          <ul class='lowQuantity' >
+            <% for(var i=0; i<lowQuantity.length; i++) {%>
+              <li class="lowQuantity">
+                <span><%= lowQuantity[i].name %></span>
+                <span class='<%= lowQuantity[i].quantity < 3 ? "alert" : "" %>'><%= lowQuantity[i].quantity %></span>
+              </li>
+            <% } %>
+            </ul>
           <h3>Item:</h3>
           <ul class="messages">
           <% for(var i=0; i<messages.length; i++) {%>
@@ -48,28 +63,7 @@
             </li>
           <% } %>
           </ul>
-
-
-          <h2>Add a message</h2>
-        <% if (user.local.email) { %>
-          <form action="/messages" method="POST">
-            <input type="text" placeholder="product name" name="name">
-            <input type="number" placeholder="quantity" name="quantity">
-            <button type="submit">Submit</button>
-          </form>
-       
-        <% } %>
-        
-        <h3>Low in stock:</h3>
-        <ul class='lowQuantity' >
-          <% for(var i=0; i<lowQuantity.length; i++) {%>
-            <li class="lowQuantity">
-              <span><%= lowQuantity[i].name %></span>
-              <span class='<%= lowQuantity[i].quantity < 3 ? "alert" : "" %>'><%= lowQuantity[i].quantity %></span>
-            </li>
-          <% } %>
-          </ul>
-        </div>
+      </div>  
 </div>
 
 <script src="main.js"></script>

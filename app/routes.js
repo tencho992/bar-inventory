@@ -12,8 +12,8 @@ module.exports = function(app, passport, db) {
         db.collection('messages').find().toArray((err, result) => {
           if (err) return console.log(err)
           let lowQuantity = result.filter(item => item.quantity < 5)
-          let extraLow = lowQuantity.filter(item => item.quantity < 3 )
-          console.log(extraLow)
+          
+          
           res.render('profile.ejs', {
             user : req.user,
             messages: result,
