@@ -47,6 +47,7 @@ module.exports = function(app, passport, db) {
         $set: {
           
           quantity: req.body.newQuantity 
+
         }
       }, {
         sort: {_id: -1},
@@ -56,11 +57,27 @@ module.exports = function(app, passport, db) {
         res.send(result)
       })
     })
-  
+   app.put('/messages', (req, res) => {
+      db.collection('messages')
+      .findOneAndUpdate({name: req.body.name, newQuantity: req.body.newQuantity}, {
+        $set: {
+          
+          newQuantity: req.body.newQuantity 
+          
+        }
+      }, {
+        sort: {_id: -1},
+        upsert: false
+      }, (err, result) => {
+        if (err) return res.send(err)
+        res.send(result)
+      })
+    })
     app.delete('/messages', (req, res) => {
       db.collection('messages').findOneAndDelete({name: req.body.name, quantity: req.body.quantity}, (err, result) => {
         if (err) return res.send(500, err)
         res.send('Message deleted!')
+        console.log('yas bitch')
       })
     })
 

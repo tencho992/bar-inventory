@@ -1,4 +1,4 @@
-var plusOne = document.getElementsByClassName("fa-thumbs-up");
+var plusOne = document.getElementsByClassName("fa-check");
 var minusOne = document.getElementsByClassName("fa-thumbs-down");
 
 var trash = document.getElementsByClassName("fa-trash");
@@ -55,15 +55,16 @@ Array.from(minusOne).forEach(function(element) {
 Array.from(trash).forEach(function(element) {
       element.addEventListener('click', function(){
         const name = this.parentNode.parentNode.childNodes[1].innerText
-        const msg = this.parentNode.parentNode.childNodes[3].innerText
-        fetch('messages', {
+        const quantity = this.parentNode.parentNode.childNodes[3].innerText
+         fetch('messages', {
           method: 'delete',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             'name': name,
-            'msg': msg
+            'quantity': quantity,
+            
           })
         }).then(function (response) {
           window.location.reload()
