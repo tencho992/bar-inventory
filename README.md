@@ -1,3 +1,13 @@
+## Project:
+Created log in authentication for mock Stock Solutions Inventory software.
+Log In -> Profile -> Log Out
+Profile contain:
+Input value from user with stock quantity.
+Inventory is then displayed 
+Items that are Low in Stock will be listed additionally. 
+Once in the low items list, 
+items less than 3 will be flagged red.
+
 ## Installation
 
 1. Clone repo
